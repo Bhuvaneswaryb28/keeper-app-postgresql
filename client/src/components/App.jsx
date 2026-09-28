@@ -6,6 +6,7 @@ import CreateArea from "./CreateArea";
 
 function App() {
   const [notes, setNotes] = useState([]);
+  const [editId, setEditId] = useState(null);
   useEffect(() =>{
     async function getNotes(){
       const response = await fetch("http://localhost:5000/");
@@ -20,6 +21,7 @@ function App() {
 
   async function addNote(newNote) {
      console.log("addNote called", newNote);
+     
 
     const response = await fetch("http://localhost:5000/notes",{
       method:"POST",
@@ -46,6 +48,33 @@ function App() {
     });
   }
 
+  function editNote(id){
+    setEditId(id);
+  }
+async function saveNote(id,editText){
+ const response= await fetch(`http://localhost:5000/notes/${id}`,{
+  method: "PUT",
+  headers:{
+     "Content-type":"application/json"},
+   body: JSON.stringify({
+      title: editText.editTitle,
+      content: editText.editContent
+    })
+ });
+ const updatedNote = await response.json();
+ setNotes(prevNotes => {
+  return prevNotes.map(noteItem => {
+    if (noteItem.id === id) {
+      return updatedNote;
+    }
+
+    return noteItem;
+  });
+});
+
+setEditId(null);
+}
+
   return (
     <div>
       <Header />
@@ -59,6 +88,9 @@ function App() {
             title={noteItem.title}
             content={noteItem.content}
             onDelete={deleteNote}
+            onEdit={editNote}
+            isEditing={editId === noteItem.id}
+            onSave={saveNote}
           />
         );
       })}

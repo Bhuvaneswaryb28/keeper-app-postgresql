@@ -11,7 +11,7 @@ const port = 5000;
 app.use(cors());
 app.use(express.json());
 
-console.log("DB PASSWORD EXISTS:", !!process.env.DB_PASSWORD);
+//console.log("DB PASSWORD EXISTS:", !!process.env.DB_PASSWORD);
 
 const db = new pg.Client({
     user : "postgres",
@@ -27,7 +27,7 @@ db.connect()
 })
 .catch((err)=> {
     console.log("connection lost");
-    console.log(err);
+    //console.log(err);
 });
 
 app.get("/",async(req,res)=>{
@@ -46,6 +46,13 @@ app.delete("/notes/:id",async(req,res)=>{
     await db.query("DELETE FROM notes WHERE id= $1",[id]);
     res.json({message:"note deleted"}); 
 });
+
+app.put("/notes/:id",async(req,res)=>{
+    const id = req.params.id;
+    const {title,content} = req.body;
+    const result =await db.query("UPDATE notes SET title=$1 , content = $2 WHERE id =$3 RETURNING *",[title,content,id]);
+    res.json(result.rows[0]);
+})
 
 app.listen(port,()=>{
     console.log(`server running port of ${port}`);
