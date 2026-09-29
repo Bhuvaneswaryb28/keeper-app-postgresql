@@ -6,7 +6,8 @@ import Zoom from '@mui/material/Zoom';
 function CreateArea(props) {
   const [note, setNote] = useState({
     title: "",
-    content: ""
+    content: "",
+    category:""
   });
   const [isExpand,setExpand] = useState(false);
 
@@ -26,7 +27,8 @@ function CreateArea(props) {
     props.onAdd(note);
     setNote({
       title: "",
-      content: ""
+      content: "",
+      category:""
     });
     
   }
@@ -54,6 +56,21 @@ function CreateArea(props) {
           placeholder="Take a note..."
           rows={isExpand ? 3:1}
         />
+
+       {isExpand && <select
+           name="category"
+           value={note.category}
+           onChange={handleChange}
+         >
+          <option value="General">General</option>
+          <option value="Study">Study</option>
+          <option value="Work">Work</option>
+          <option value="Personal">Personal</option>
+          <option value="Ideas">Ideas</option>
+        </select>
+        }
+        
+
         <Zoom in={isExpand}>
         <Fab onClick={submitNote}><AddIcon /></Fab>
         </Zoom>

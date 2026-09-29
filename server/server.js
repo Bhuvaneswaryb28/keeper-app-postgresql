@@ -36,8 +36,8 @@ app.get("/",async(req,res)=>{
 });
 
 app.post("/notes",async(req,res)=>{
-     const {title,content }= req.body;
-    const result = await db.query("INSERT INTO notes (title,content) VALUES($1,$2) RETURNING *",[title,content]);
+     const {title,content,category }= req.body;
+    const result = await db.query("INSERT INTO notes (title,content,category) VALUES($1,$2,$3) RETURNING *",[title,content,category]);
     res.json(result.rows[0]);
 });
 
@@ -49,9 +49,22 @@ app.delete("/notes/:id",async(req,res)=>{
 
 app.put("/notes/:id",async(req,res)=>{
     const id = req.params.id;
-    const {title,content} = req.body;
-    const result =await db.query("UPDATE notes SET title=$1 , content = $2 WHERE id =$3 RETURNING *",[title,content,id]);
+    const {title,content,category} = req.body;
+    const result =await db.query("UPDATE notes SET title=$1 , content = $2 , category= $3 WHERE id =$4 RETURNING *",[title,content,category,id]);
     res.json(result.rows[0]);
+});
+
+app.put("/notes/:id/pin",async(req,res)=>{
+const id = req.params.id;
+
+    const result = await db.query(
+        "UPDATE notes SET is_pinned = NOT is_pinned WHERE id = $1 RETURNING *",
+        [id]
+    );
+
+    res.json(result.rows[0]);
+
+
 })
 
 app.listen(port,()=>{

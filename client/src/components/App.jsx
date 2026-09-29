@@ -6,6 +6,7 @@ import CreateArea from "./CreateArea";
 
 function App() {
   const [notes, setNotes] = useState([]);
+  const [searchText, setSearchText] = useState("");
   const [editId, setEditId] = useState(null);
   useEffect(() =>{
     async function getNotes(){
@@ -58,7 +59,8 @@ async function saveNote(id,editText){
      "Content-type":"application/json"},
    body: JSON.stringify({
       title: editText.editTitle,
-      content: editText.editContent
+      content: editText.editContent,
+      category: editText.editCategory
     })
  });
  const updatedNote = await response.json();
@@ -75,22 +77,64 @@ async function saveNote(id,editText){
 setEditId(null);
 }
 
+async function pinNote(id) {
+  //console.log("PIN NOTE CALLED", id);//debugging
+  const response = await fetch(`http://localhost:5000/notes/${id}/pin`, {
+    method: "PUT"
+  });
+  //console.log("RESPONSE STATUS", response.status);
+
+  const updatedNote = await response.json();
+  //console.log("UPDATED NOTE", updatedNote);
+
+  setNotes(prevNotes => {
+    return prevNotes.map(noteItem => {
+      if (noteItem.id === id) {
+        return updatedNote;
+      }
+
+      return noteItem;
+    });
+  });
+}
+
+function handleSearch(event) {
+  setSearchText(event.target.value);
+}
+function clearSearch() {
+  setSearchText("");
+}
+
+const filteredNotes = notes.filter(noteItem => {
+  return (
+    noteItem.title.toLowerCase().includes(searchText.toLowerCase()) ||
+    noteItem.content.toLowerCase().includes(searchText.toLowerCase()) ||
+    noteItem.category.toLowerCase().includes(searchText.toLowerCase())
+  );
+});
+const sortedNotes = [...filteredNotes].sort((a, b) => {
+  return b.is_pinned - a.is_pinned;
+});
+
   return (
     <div>
-      <Header />
+      <Header  onSearch={handleSearch} searchText={searchText} onClear={clearSearch} />
       <CreateArea onAdd={addNote} />
       <div className="notes-container">
-      {notes.map((noteItem) => {
+      {sortedNotes.map((noteItem) => {
         return (
           <Note
             key={noteItem.id}
             id={noteItem.id}
             title={noteItem.title}
             content={noteItem.content}
+            category={noteItem.category}
             onDelete={deleteNote}
             onEdit={editNote}
             isEditing={editId === noteItem.id}
+            onPin={pinNote}
             onSave={saveNote}
+            isPinned={noteItem.is_pinned}
           />
         );
       })}

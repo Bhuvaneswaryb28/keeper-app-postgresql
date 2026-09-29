@@ -8,7 +8,7 @@ html {
 }
 body {
   background: #eee;
-  padding: 0 16px;
+  padding: 0 ;
   background-color: #d9d9c5;
 background-image: url("https://www.transparenttextures.com/patterns/always-grey.png");
 
@@ -36,7 +36,7 @@ footer {
 }
 
 footer p {
-  color: #ccc;
+  color: #1a1818;
 }
 .note {
   background: #fff;
