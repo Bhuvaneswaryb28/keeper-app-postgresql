@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -8,17 +9,39 @@ import InputAdornment from "@mui/material/InputAdornment";
 import ClearIcon from "@mui/icons-material/Clear";
 
 function Header(props) {
+  const navigate = useNavigate();
 
 function handleClearClick(){
   props.onClear()
 }
 
+
+async function handleOut(){
+  const response = await fetch("http://localhost:5000/logout",{
+    method :"POST",
+    credentials : "include",
+  });
+
+  const data = await response.json();
+
+  if(response.ok){
+    console.log(data);
+    navigate("/login");
+  }
+}
+
   return (
-    <AppBar position="static"  sx={{ backgroundColor: "#f5ba13",  width: "100vw"}}>
-       <Toolbar>
-        <Typography variant="h6">
-          Keeper
-        </Typography>
+    <AppBar position="static"  sx={{ backgroundColor: "#f5ba13",  width: "100%"}}>
+       <Toolbar sx={{ flexDirection: "column" }}>
+        <div className="welcome-name">
+    {props.user && <h2>Welcome, {props.user.name}</h2>}
+  </div>
+
+  <div style={{ display: "flex", width: "100%" }}>
+    <Typography variant="h6">
+      Keeper
+    </Typography>
+
        
 
       <TextField
@@ -45,7 +68,10 @@ function handleClearClick(){
 )
   }
 }}
-      />
+  />
+  </div>
+
+  <button onClick={handleOut} className="logout-button">Logout</button>
       </Toolbar>
     </AppBar >
   );

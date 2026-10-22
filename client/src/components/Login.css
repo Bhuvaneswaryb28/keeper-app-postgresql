@@ -1,0 +1,78 @@
+.login-form h2{
+  color: #292929;
+font-size: 25px;
+line-height: 1.4;
+margin-bottom: 14px;
+}
+
+.login-form > p {
+ color: #686868;
+line-height: 1.7;
+}
+
+.login-form > p:last-child {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+.login-form > p:last-child a {
+  color: #b88700;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.login-form{
+width: 100%;
+max-width: 400px;
+margin: auto;
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: column;
+padding: 24px;
+background-color: #fffdf5;
+box-sizing: border-box;
+}
+
+.login-button{
+display: block;
+margin-top: 26px;
+padding: 14px 20px;
+background-color: #f5ba13;
+color: #292929;
+text-decoration: none;
+font-weight: 600;
+border-radius: 10px;
+width: 100%;
+cursor: pointer;
+transition: background-color 0.2s ease;
+}
+.login-button:hover {
+  opacity: 0.8;
+}
+
+.login-form input[type=email], .login-form input[type=password] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+.login-page{
+    min-height:100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+@media (max-width: 480px) {
+.login-form {
+padding: 32px 22px;
+}
+
+.login-form h2 {
+font-size: 22px;
+}
+}

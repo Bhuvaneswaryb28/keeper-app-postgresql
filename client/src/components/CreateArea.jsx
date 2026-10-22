@@ -58,10 +58,14 @@ function CreateArea(props) {
         />
 
        {isExpand && <select
+           className="category-list"
            name="category"
            value={note.category}
            onChange={handleChange}
          >
+          <option value="" disabled>
+                Select category
+            </option>
           <option value="General">General</option>
           <option value="Study">Study</option>
           <option value="Work">Work</option>

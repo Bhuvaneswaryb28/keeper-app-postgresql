@@ -14,12 +14,7 @@ background-image: url("https://www.transparenttextures.com/patterns/always-grey.
 
 }
 
-header {
-  background-color: #f5ba13;
-  margin: auto -16px;
-  padding: 16px 32px;
-  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
-}
+
 
 header h1 {
   color: #fff;
@@ -106,4 +101,146 @@ form.create-note button {
 .notes-container {
   display: flex;
   flex-wrap: wrap;
+  gap: 20px;
+}
+
+.category-container {
+  margin: 30px 20px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.category-container h2 {
+  margin-bottom: 15px;
+  font-size: 22px;
+  border-bottom: 1px solid #161515;
+  padding-bottom: 8px;   
+}
+
+/* Welcome component Style */
+
+.welcome-class{
+min-height: 100vh;
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: column;
+padding: 24px;
+background-color: #fffdf5;
+box-sizing: border-box;
+}
+
+.welcome-card h1 {
+color: #f5ba13;
+font-size: 38px;
+margin-bottom: 24px;
+}
+
+.welcome-card h2 {
+color: #292929;
+font-size: 25px;
+line-height: 1.4;
+margin-bottom: 14px;
+}
+
+.welcome-card > p {
+color: #686868;
+line-height: 1.7;
+}
+
+.welcome-button {
+display: block;
+margin-top: 26px;
+padding: 14px 20px;
+background-color: #f5ba13;
+color: #292929;
+text-decoration: none;
+font-weight: 600;
+border-radius: 10px;
+transition: background-color 0.2s ease;
+}
+
+.welcome-button {
+background-color: #e8ac05;
+}
+
+.welcome-login {
+margin-top: 24px;
+font-size: 14px;
+}
+
+
+
+@media (max-width: 480px) {
+.welcome-card {
+padding: 32px 22px;
+}
+
+.welcome-card h2 {
+font-size: 22px;
+}
+}
+
+/* Welcome page header only */
+.welcome-header {
+  width: 100%;
+  background-color: #f5ba13;
+  padding: 18px 24px;
+  box-sizing: border-box;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
+  margin: 0;
+}
+
+/* Welcome page heading */
+.welcome-header h1 {
+  color: #fff;
+  font-family: "McLaren", cursive;
+  font-weight: 200;
+}
+
+
+
+/* Logout Button */
+.logout-button{
+  background-color: white;
+  border: none;
+  color:black;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 10px;
+transition: background-color 0.2s ease;
+align-self: flex-end;
+margin-top: 10px;
+margin-right: 10px;
+}
+
+.welcome-name{
+ width: 100%;
+display: flex;
+justify-content: center;
+align-items: center;
+
+}
+.welcome-name h2{
+margin:0;
+}
+
+
+.category-list{
+  background-color: #fffdf5;
+  border: 1px solid #F5F5DC;
+  padding: 16px 24px;
+  border-radius: 8px;
+  margin-top: 10px;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+}
+.category-list:focus{
+  border-color: #f5ba13;
+  outline:none ;
 }
