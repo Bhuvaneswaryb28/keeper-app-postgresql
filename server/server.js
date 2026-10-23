@@ -4,22 +4,40 @@ import cors from "cors";
 import dotenv from "dotenv";
 import bcrypt from "bcrypt";
 import session from "express-session";
+import connectPgSimple from "connect-pg-simple";
 
 dotenv.config();
 
 const app = express();
+app.set("trust proxy", 1);
+const PgSession = connectPgSimple(session); 
 const port = process.env.PORT || 5000;
 const setSalt = 10;
 
+const sessionStore = new PgSession({
+    conString: process.env.DATABASE_URL,
+    createTableIfMissing: true,
+    ssl: {
+        rejectUnauthorized: true
+    }
+});
+
 app.use(cors({
-     origin: "http://localhost:5173",
+     origin:  process.env.CLIENT_URL || "http://localhost:5173"     ,
     credentials: true
 }));
 app.use(express.json());
 app.use(session({
+    store: sessionStore,
     secret: process.env.SESSION_SECRET,
-    resave :false,
-    saveUninitialized : false
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "none",
+        maxAge: 24 * 60 * 60 * 1000
+    }
 }));
 
 //console.log("DB PASSWORD EXISTS:", !!process.env.DB_PASSWORD);
