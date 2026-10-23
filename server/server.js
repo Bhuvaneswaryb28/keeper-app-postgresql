@@ -8,7 +8,7 @@ import session from "express-session";
 dotenv.config();
 
 const app = express();
-const port = 5000;
+const port = process.env.PORT || 5000;
 const setSalt = 10;
 
 app.use(cors({
@@ -25,12 +25,12 @@ app.use(session({
 //console.log("DB PASSWORD EXISTS:", !!process.env.DB_PASSWORD);
 
 const db = new pg.Client({
-    user : "postgres",
-    host : "localhost",
-    database : "keeper",
-    password : process.env.DB_PASSWORD,
-    port : 5432,
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: true,
+  },
 });
+
 
 db.connect()
 .then(()=>{
