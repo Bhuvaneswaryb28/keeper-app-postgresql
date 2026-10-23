@@ -4,6 +4,7 @@ import Footer from "./Footer";
 import Note from "./Note";
 import CreateArea from "./CreateArea";
 
+const API_URL = import.meta.env.VITE_API_URL;
 
 function Keeper() {
   const [notes, setNotes] = useState([]);
@@ -14,7 +15,7 @@ function Keeper() {
   useEffect(() =>{
 
     async function getUser(){
-      const result = await fetch("http://localhost:5000/me",{
+      const result = await fetch(`${API_URL}/me`,{
         credentials:"include",
       });
 
@@ -25,7 +26,7 @@ function Keeper() {
     }
 
     async function getNotes(){
-      const response = await fetch("http://localhost:5000/",{
+      const response = await fetch(`${API_URL}/`,{
         credentials:"include"
       });
       const data = await response.json();
@@ -45,7 +46,7 @@ function Keeper() {
 
   async function addNote(newNote) {
      console.log("addNote called", newNote);
-    const response = await fetch("http://localhost:5000/notes",{
+    const response = await fetch(`${API_URL}/notes`,{
       method:"POST",
       credentials: "include",
       headers:{"Content-Type":"application/json"},
@@ -61,7 +62,7 @@ function Keeper() {
   }
 
  async function deleteNote(id) {
-   const response = await fetch(`http://localhost:5000/notes/${id}`,{
+   const response = await fetch(`${API_URL}/notes/${id}`,{
     method : "DELETE",
     credentials: "include"
    });
@@ -76,7 +77,7 @@ function Keeper() {
     setEditId(id);
   }
 async function saveNote(id,editText){
- const response= await fetch(`http://localhost:5000/notes/${id}`,{
+ const response= await fetch(`${API_URL}/notes/${id}`,{
   method: "PUT",
    credentials: "include",
   headers:{
@@ -103,7 +104,7 @@ setEditId(null);
 
 async function pinNote(id) {
   //console.log("PIN NOTE CALLED", id);//debugging
-  const response = await fetch(`http://localhost:5000/notes/${id}/pin`, {
+  const response = await fetch(`${API_URL}/notes/${id}/pin`, {
     method: "PUT",
      credentials: "include"
   });
@@ -154,7 +155,7 @@ const sortedNotes = [...filteredNotes].sort((a, b) => {
     
     {categories.map(category => {
       const categoryNotes = sortedNotes.filter(noteItem => {
-        const noteCategory = noteItem.category || "General";
+      const noteCategory = noteItem.category || "General";
         return noteCategory === category;
       });
       if (categoryNotes.length === 0) {

@@ -8,6 +8,8 @@ import SearchIcon from "@mui/icons-material/Search";
 import InputAdornment from "@mui/material/InputAdornment";
 import ClearIcon from "@mui/icons-material/Clear";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 function Header(props) {
   const navigate = useNavigate();
 
@@ -17,7 +19,7 @@ function handleClearClick(){
 
 
 async function handleOut(){
-  const response = await fetch("http://localhost:5000/logout",{
+  const response = await fetch(`${API_URL}/logout`,{
     method :"POST",
     credentials : "include",
   });

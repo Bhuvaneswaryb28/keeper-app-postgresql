@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 function ProtectedRoute({ children }) {
   const [loading, setLoading] = useState(true);
   const [authenticated, setAuthenticated] = useState(false);
 
   useEffect(() => {
     async function checkUser() {
-      const response = await fetch("http://localhost:5000/me", {
+      const response = await fetch(`${API_URL}/me`, {
         credentials: "include"
       });
 

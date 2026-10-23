@@ -2,6 +2,8 @@ import React,{useState} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Login.css";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 function Login(){
     const [formText,setFormText] = useState({
         email : "",
@@ -24,7 +26,7 @@ function Login(){
     async function formSubmit(event){
         event.preventDefault();
 
-        const response = await fetch("http://localhost:5000/login",{
+        const response = await fetch(`${API_URL}/login`,{
             method : "POST",
             headers :{"Content-type" : "application/json"},
             credentials: "include",
@@ -33,9 +35,9 @@ function Login(){
 
         const data = await response.json();
         if(response.ok){
-            navigate("/keeper");
+         navigate("/keeper");
         }
-        console.log(data); 
+        console.log(data);
 
     }
  return(
@@ -46,7 +48,6 @@ function Login(){
     <form onSubmit={formSubmit} className="login-form">
         <h2>Welcome Back</h2>
         <p>Sign in to access your notes.</p>
-        
         <input type="email"
         name="email"
         value={formText.email}

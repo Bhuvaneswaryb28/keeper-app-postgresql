@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import "./Register.css";
 import { Link } from "react-router-dom";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 function Register(){
 
     const [formData,setFormdate] = useState({
@@ -26,7 +28,7 @@ function Register(){
 
   async function submitForm(event){
         event.preventDefault();
-        const response =await fetch("http://localhost:5000/register",{
+        const response =await fetch(`${API_URL}/register`,{
             method : "POST",
             headers:{"Content-Type":"application/json"},
             body:JSON.stringify(formData)
